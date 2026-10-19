@@ -1,0 +1,34 @@
+:root {
+  --bg: #f6f5f1; --fg: #16231f; --muted: #5d6b66; --line: #dcdad2;
+  --card: #ffffff; --accent: #0f6b57; --accent-fg: #ffffff; --warn: #b4570a;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1816; --fg: #e8efec; --muted: #94a59f; --line: #28372f; --card: #17231f; --accent: #4fc3a1; --accent-fg: #0b1512; --warn: #f0a35e; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.5; }
+a { color: var(--accent); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+header.site { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+header.site b { font-size: 18px; }
+nav { display: flex; gap: 16px; flex-wrap: wrap; }
+h1 { font-size: 34px; line-height: 1.15; margin: 0 0 12px; text-wrap: balance; }
+h2 { font-size: 22px; margin: 32px 0 12px; }
+p.lead { font-size: 18px; color: var(--muted); margin: 0 0 20px; }
+.btn { display: inline-block; background: var(--accent); color: var(--accent-fg); border: 0; border-radius: 6px; padding: 12px 20px; font-size: 16px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn.alt { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.btn:disabled { opacity: .6; cursor: wait; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; min-width: 0; }
+.card b { display: block; font-size: 20px; }
+.muted { color: var(--muted); font-size: 14px; }
+form { display: flex; flex-direction: column; gap: 14px; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 14px; }
+input, select, textarea { font: inherit; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--fg); }
+input[type=checkbox] { width: 18px; height: 18px; }
+label.check { flex-direction: row; align-items: center; gap: 10px; font-weight: 500; }
+.price { font-size: 26px; font-weight: 700; }
+.err { color: var(--warn); font-weight: 600; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.scroll { overflow-x: auto; }
