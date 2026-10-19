@@ -17,7 +17,8 @@ create table public.delivery_requests (
   slot text not null,
   notes text,
   price_cents integer not null check (price_cents > 0),
-  status text not null default 'pending_payment' check (status in (
+  status text not null default 'requested' check (status in (
+    'requested',
     'pending_payment','paid','assigned','delivered','cancelled')),
   stripe_session_id text unique,
   rider_name text

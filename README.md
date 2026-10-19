@@ -1,32 +1,38 @@
 # Student Delivery Lyon
 
-Next.js 14 site with Supabase (database) and Stripe (payments), made to deploy on Vercel.
+Next.js 14 site with Supabase (database), made to deploy on Vercel. Stripe card payment is optional and off until you add the keys.
 
-Pages: `/` home, `/book` booking form and Stripe Checkout, `/ride` rider application, `/success`, `/admin` (password protected).
+Pages: `/` home, `/book` booking form, `/ride` rider application, `/faq`, `/legal`, `/success`, `/admin` (password protected).
 
 ## Status
 
-Written but not yet built or run: the sandbox that produced it could not install npm packages. The first `npm install && npm run build` on your computer or on Vercel is the real test. Send me any error it prints.
+Written but not yet built or run: the sandbox that produced it could not install npm packages. The first Vercel build is the real test. Send any error back.
 
-## Deploy in 4 steps
+## Deploy on Vercel (no Stripe needed)
 
-1. **GitHub.** Create a private repo, push this folder to it.
-2. **Vercel.** vercel.com > Add New Project > import the repo. Framework: Next.js. Add the environment variables below, then deploy.
-3. **Stripe.** In the Stripe dashboard (test mode first):
-   - Developers > API keys: copy the secret key to `STRIPE_SECRET_KEY`.
-   - Developers > Webhooks > Add endpoint: `https://YOUR-SITE/api/webhook`, event `checkout.session.completed`. Copy its signing secret to `STRIPE_WEBHOOK_SECRET`.
-   - Redeploy on Vercel after adding the variables.
-4. **Test.** Book a delivery with the test card `4242 4242 4242 4242`, any future date, any CVC. The request should appear in `/admin` with status `paid`.
+1. Vercel > Add New > Project > import this repo. Framework: Next.js.
+2. Add these environment variables, then deploy:
+   - `SUPABASE_URL` = `https://cmmeaztwnfdbmqjfypaw.supabase.co`
+   - `SUPABASE_SERVICE_ROLE_KEY` = Supabase > Project Settings > API Keys > service_role / secret key (keep it secret)
+   - `ADMIN_PASSWORD` = a password for `/admin`
+   - `SITE_URL` = your Vercel address, e.g. `https://delivery-lyon.vercel.app` (set it after the first deploy, then redeploy)
+3. Open `/book`, send a test request, then open `/admin` (any username, your password). The request shows as `requested`.
 
-## Environment variables
+## How it runs without Stripe
 
-See `.env.example`. `SUPABASE_URL` is already filled in. Get `SUPABASE_SERVICE_ROLE_KEY` from Supabase > Project Settings > API Keys. It is a secret: only put it in Vercel's settings, never in the code or in a chat.
+A booking is saved with status `requested`. You assign a rider in `/admin` and move it to `assigned`, then `delivered`. The customer pays the rider by Revolut, Lydia or cash. The rider page and admin list work the same either way.
 
-## How the money works
+## Adding Stripe later
 
-- Prices live in `lib/services.js` and are set again on the server for every payment, so visitors cannot change what they pay.
-- Stripe takes roughly 1.5% + €0.25 per card payment in Europe. On a €2.50 parcel that is about €0.29, which is close to half of your 25% commission. Push bundles and the monthly plan.
-- v1 collects the full amount into your Stripe account. Paying riders out through Stripe Connect is the next step. Until then, pay riders by bank transfer from the `/admin` list.
+Add `STRIPE_SECRET_KEY` (test key first) and `STRIPE_WEBHOOK_SECRET` in Vercel and redeploy. The booking page switches itself to card payment. Create the webhook in Stripe at `https://YOUR-SITE/api/webhook` for the event `checkout.session.completed`. Test card: `4242 4242 4242 4242`.
+
+Stripe fees are roughly 1.5% + €0.25 per European card payment, about €0.29 on a €2.50 parcel. Your 25% commission on that parcel is about €0.63.
+
+## Things to fill in before you share it widely
+
+- A team contact email in `app/legal/page.js`.
+- Check the delivery slots in `lib/services.js` and the answers in `app/faq/page.js` match what you can actually do.
+- Have your tutor read `/legal` before charging real money.
 
 ## Not built yet
 

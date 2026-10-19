@@ -13,11 +13,15 @@ export default function RootLayout({ children }) {
           <header className="site">
             <b><a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>Student Delivery Lyon</a></b>
             <nav>
-              <a href="/book">Book a delivery</a>
-              <a href="/ride">Become a rider</a>
+              <a href="/book">Book</a>
+              <a href="/ride">Ride</a>
+              <a href="/faq">FAQ</a>
             </nav>
           </header>
           {children}
+          <footer className="muted" style={{ marginTop: 48, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
+            A student project from emlyon business school. <a href="/legal">Terms and privacy</a>
+          </footer>
         </div>
       </body>
     </html>

@@ -4,7 +4,7 @@ import { SERVICES, euro } from '../../lib/services';
 
 export const dynamic = 'force-dynamic';
 
-const STATUSES = ['pending_payment', 'paid', 'assigned', 'delivered', 'cancelled'];
+const STATUSES = ['requested', 'pending_payment', 'paid', 'assigned', 'delivered', 'cancelled'];
 
 // Server action. The /admin route is already behind the password in middleware.js.
 async function update(formData) {
@@ -24,14 +24,15 @@ export default async function Admin() {
     supabase.from('rider_applications').select('*').order('created_at', { ascending: false }).limit(200),
   ]);
 
-  const paid = (requests || []).filter((r) => ['paid', 'assigned', 'delivered'].includes(r.status));
+  const paid = (requests || []).filter((r) => ['paid', 'assigned', 'delivered'].includes(r.status)); // confirmed jobs
   const revenue = paid.reduce((sum, r) => sum + r.price_cents, 0);
 
   return (
     <>
       <h1>Admin</h1>
       <p className="muted">
-        {paid.length} paid requests, {euro(revenue)} collected, estimated 25% commission {euro(Math.round(revenue * 0.25))}.
+        {(requests || []).filter((r) => r.status === 'requested').length} new requests to assign.{' '}
+        {paid.length} confirmed jobs worth {euro(revenue)}, estimated 25% commission {euro(Math.round(revenue * 0.25))}.
       </p>
 
       <h2>Delivery requests</h2>

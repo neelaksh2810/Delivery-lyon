@@ -34,7 +34,12 @@ export default function Home() {
         <div className="card"><b>2. A rider is assigned</b><span className="muted">We confirm by email or WhatsApp.</span></div>
         <div className="card"><b>3. Delivered</b><span className="muted">The rider brings it at your slot and sends a photo.</span></div>
       </div>
-      <p className="muted" style={{ marginTop: 32 }}>A student project from emlyon business school.</p>
+      <h2>Coming soon</h2>
+      <div className="card">
+        <b>€9.99 per month for 4 deliveries</b>
+        <span className="muted">A monthly plan for students who order often. Book a delivery now and tell us in the notes if you want it.</span>
+      </div>
+      <p style={{ marginTop: 24 }}>Questions? <a href="/faq">Read the FAQ</a>.</p>
     </>
   );
 }
